@@ -1,32 +1,32 @@
-
-import os
 import requests
+import os
 
-NEXUS_URL = "https://nexus.example.com/repository"
-NEXUS_USER = os.getenv("NEXUS_USER")
-NEXUS_PASSWORD = os.getenv("NEXUS_PASSWORD")
+NEXUS_URL = "http://nexus.kihhuf.org:8081/repository/infra/ubuntu/"
+USERNAME = "admin"
+PASSWORD = "admin"
 
-def upload_to_nexus(binary_name, version):
-    file_path = f"/downloads/{binary_name}-{version}.tar.gz"
-    if not os.path.exists(file_path):
-        print(f"File {file_path} not found, skipping upload.")
-        return
-
-    with open(file_path, "rb") as f:
-        response = requests.put(
-            f"{NEXUS_URL}/{binary_name}/{version}.tar.gz",
-            auth=(NEXUS_USER, NEXUS_PASSWORD),
-            data=f
-        )
-
-    if response.status_code == 201:
-        print(f"Uploaded {binary_name} version {version} to Nexus")
-    else:
-        print(f"Failed to upload {binary_name} to Nexus: {response.text}")
+def upload_to_nexus(app, version):
+    """ Uploads new version to Nexus and updates the `current` folder. """
+    filepath = f"{app}-latest.bin"
+    
+    if os.path.exists(filepath):
+        new_version_folder = f"{NEXUS_URL}/{app}/{version}/"
+        current_folder = f"{NEXUS_URL}/{app}/current/"
+        
+        # Upload to new version folder
+        with open(filepath, "rb") as f:
+            response = requests.put(new_version_folder, auth=(USERNAME, PASSWORD), data=f)
+            print(response.status_code, response.text)
+        
+        # Update current folder
+        with open(filepath, "rb") as f:
+            response = requests.put(current_folder, auth=(USERNAME, PASSWORD), data=f)
+            print(response.status_code, response.text)
 
 if __name__ == "__main__":
-    with open("new_versions.txt", "r") as f:
-        binaries_to_update = [line.strip().split() for line in f]
-
-    for binary, version in binaries_to_update:
-        upload_to_nexus(binary, version)
+    for file in os.listdir():
+        if file.endswith("_latest.txt"):
+            app = file.replace("_latest.txt", "")
+            with open(file) as f:
+                version = f.read().strip()
+                upload_to_nexus(app, version)
