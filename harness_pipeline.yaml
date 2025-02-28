@@ -1,1 +1,22 @@
 
+pipeline:
+  name: Nexus Upload Automation
+  stages:
+    - stage:
+        name: Check New Versions
+        steps:
+          - run:
+              name: Check for Latest Binaries
+              command: python scripts/check_new_version.py
+          - run:
+              name: Compare with Nexus
+              command: python scripts/compare_versions.py
+          - run:
+              name: Download New Binaries
+              command: python scripts/download_binary.py
+          - run:
+              name: Archive Old Version
+              command: python scripts/move_old_version.py
+          - run:
+              name: Upload to Nexus
+              command: python scripts/upload_to_nexus.py
