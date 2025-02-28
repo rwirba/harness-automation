@@ -1,0 +1,27 @@
+{
+  "ubuntu": {
+    "cloudwatch_agent": "https://s3.amazonaws.com/amazoncloudwatch-agent/linux/latest/amazon-cloudwatch-agent.deb",
+    "flexera_agent": "https://downloads.flexera.com/flexera-agent/latest/linux/flexera-agent.deb",
+    "kube": "https://storage.googleapis.com/kubernetes-release/release/stable.txt",
+    "nessus": "https://www.tenable.com/downloads/api/v2/pages/nessus",
+    "crowdstrike": "https://www.crowdstrike.com/resources/files/csagent_latest.deb",
+    "helm": "https://api.github.com/repos/helm/helm/releases/latest",
+    "splunk": "https://www.splunk.com/en_us/download/splunk-enterprise.html",
+    "tenable": "https://www.tenable.com/downloads/api/v2/pages/tenable-sc",
+    "npm": "https://nodejs.org/dist/latest/"
+  },
+  "windows": {
+    "autopass": "https://example.com/autopass/latest.exe",
+    "cloudwatch_agent": "https://s3.amazonaws.com/amazoncloudwatch-agent/windows/latest/amazon-cloudwatch-agent.msi",
+    "flexera_agent": "https://downloads.flexera.com/flexera-agent/latest/windows/flexera-agent.msi",
+    "kube": "https://dl.k8s.io/release/stable.txt",
+    "nessus": "https://www.tenable.com/downloads/api/v2/pages/nessus",
+    "crowdstrike": "https://www.crowdstrike.com/resources/files/csagent_latest.exe",
+    "helm": "https://api.github.com/repos/helm/helm/releases/latest",
+    "splunk": "https://www.splunk.com/en_us/download/splunk-enterprise.html",
+    "sysmon": "https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon",
+    "new_relic": "https://download.newrelic.com/windows_agent/latest.msi",
+    "tenable": "https://www.tenable.com/downloads/api/v2/pages/tenable-sc",
+
+  }
+}
