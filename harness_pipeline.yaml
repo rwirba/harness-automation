@@ -1,22 +1,42 @@
-
 pipeline:
   name: Nexus Upload Automation
   stages:
     - stage:
-        name: Check New Versions
-        steps:
-          - run:
-              name: Check for Latest Binaries
-              command: python scripts/check_new_version.py
-          - run:
-              name: Compare with Nexus
-              command: python scripts/compare_versions.py
-          - run:
-              name: Download New Binaries
-              command: python scripts/download_binary.py
-          - run:
-              name: Archive Old Version
-              command: python scripts/move_old_version.py
-          - run:
-              name: Upload to Nexus
-              command: python scripts/upload_to_nexus.py
+        name: Fetch GitHub Repo
+        type: CI
+        execution:
+          steps:
+            - step:
+                name: Clone GitHub Repository
+                type: Run
+                command: git clone git@github.com:your-org/nexus-automation.git
+
+    - stage:
+        name: Check for Updates
+        type: CI
+        execution:
+          steps:
+            - step:
+                name: Check Versions
+                type: Run
+                command: python3 scripts/check_versions.py
+
+    - stage:
+        name: Download Binaries
+        type: CI
+        execution:
+          steps:
+            - step:
+                name: Download Latest Binaries
+                type: Run
+                command: bash scripts/download_binaries.sh
+
+    - stage:
+        name: Upload to Nexus
+        type: CI
+        execution:
+          steps:
+            - step:
+                name: Upload to Nexus
+                type: Run
+                command: python3 scripts/upload_to_nexus.py
