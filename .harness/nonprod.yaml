@@ -1,0 +1,8 @@
+environment:
+  name: nonprod
+  identifier: nonprod
+  description: ""
+  tags: {}
+  type: PreProduction
+  orgIdentifier: default
+  projectIdentifier: nexus
